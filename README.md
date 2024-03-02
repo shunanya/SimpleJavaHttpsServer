@@ -24,7 +24,7 @@ The folder `"./src/main/resources/"` should contain files which will be requesti
 
 Thus, now goto project root folder and start the server:
 
-    cd <your path>/SimpleHttpsServer
+    cd <your path>/SimpleJavaHttpsServer
     java ./src/main/java/org/example/Server.java
 
 **Note:** the current project uses JDK version not less than 17.x  
