@@ -13,7 +13,7 @@ and put into it the certificate __server.pfx__ that was built as described in [A
 
 In `"./src/main/java"` folder create the folders set which is the package 
 for put there Java classes (e.g. `org/example/` or something like that) 
-and create there class named `"Server.java"` (the content can be copied from current project).
+and create there classes named `Server.java` and `ServerV.java` (the content can be copied from current project).
 
 **Note:** don't forget to check the correspondent of `package name` to folders set where located `server.java` class.
 
@@ -22,12 +22,19 @@ The folder `"./src/main/resources/"` should contain files which will be requesti
 
 ## Checking the server workability ##
 
-Thus, now goto project root folder and start the server:
+Thus, goto project root folder:
 
     cd <your path>/SimpleJavaHttpsServer
+
+and start the server (for using Platform Threading Model)
+
     java ./src/main/java/org/example/Server.java
 
-**Note:** the current project uses JDK version not less than 17.x  
+or srart the server (for using Virtual Threading Model)
+
+    java --enable-preview --source 19 ./src/main/java/org/example/ServerV.java
+
+**Note:** the current project uses JDK version not less than 19.x  
  
 Put in browser https://localhost:8443/index.html and you should see Test Page ![test](./Screenshot.png)
 
