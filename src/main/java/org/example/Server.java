@@ -31,9 +31,11 @@ public class Server {
     static long time0 = 0;
     static final long delay = 1000; // 1 sec
     static  final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy' 'HH:mm:ss:S");
-    KeyStore keyStore;
+    static boolean useVirtualModel = false;
 
     public static void main(String[] args) {
+        useVirtualModel = (args.length != 0 && args[0].equalsIgnoreCase("--v"));
+        System.out.println((useVirtualModel?"Virtual":"Platform")+ " Threading Model will be used");
         new Server();
     }
 
@@ -60,12 +62,11 @@ public class Server {
         public void handle(HttpExchange ex) throws IOException {
             URI requestURI = ex.getRequestURI();
 //            System.out.println("Request: "+requestURI);
+            byte[] response = "Hello".getBytes();
             String trimmedURI = requestURI.getPath().substring(1);
-            if (trimmedURI.isBlank()) {
-                trimmedURI = "index.html";
+            if (!trimmedURI.isBlank()) {
+                response = getFile(trimmedURI);
             }
-//            System.out.println("Trimmer URI: "+trimmedURI);
-            byte[] response = getFile(trimmedURI);
             ex.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
             ex.sendResponseHeaders(200, response.length);
             OutputStream os = ex.getResponseBody();
@@ -101,7 +102,12 @@ public class Server {
                 }
             });
             httpsServer.createContext("/", new MyHandler());
-            ExecutorService executor = new ThreadPoolExecutor(100, 10000, 1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(2));
+            ExecutorService executor;
+            if (useVirtualModel) {
+                executor = Executors.newVirtualThreadPerTaskExecutor(); // Using Virtual Treads instead of Real Threads
+            } else {
+                executor = new ThreadPoolExecutor(100, 10000, 1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<>(2));
+            }
             httpsServer.setExecutor(executor);
             httpsServer.start();
             System.out.println("Started HTTPS server on localhost port " + port);
@@ -119,7 +125,7 @@ public class Server {
         return sslContext;
     }
     private KeyStore createKeyStore() throws Exception {
-        keyStore = KeyStore.getInstance("PKCS12");
+        KeyStore keyStore = KeyStore.getInstance("PKCS12");
         File cert = new File(workingDir, certificate).getAbsoluteFile().toPath().normalize().toFile();
         FileInputStream fis = new FileInputStream(cert);
         keyStore.load(fis, password);

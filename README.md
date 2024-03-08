@@ -1,6 +1,6 @@
 # Simple Java HTTPS server #
 
-The current project is example which is explain how to create simple HTTPS server on pure Java platform.
+The current project is example which is explained how to create simple HTTPS server on pure Java platform.
 
 ## Basic Steps ##
 
@@ -30,7 +30,7 @@ and start the server (for using Platform Threading Model)
 
     java ./src/main/java/org/example/Server.java
 
-or srart the server (for using Virtual Threading Model)
+or start the server (for using Virtual Threading Model)
 
     java --enable-preview --source 19 ./src/main/java/org/example/ServerV.java
 
