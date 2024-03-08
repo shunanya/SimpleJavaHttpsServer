@@ -35,7 +35,7 @@ public class Server {
 
     public static void main(String[] args) {
         useVirtualModel = (args.length != 0 && args[0].equalsIgnoreCase("--v"));
-        System.out.println((useVirtualModel?"Virtual":"Platform")+ " Threading Model will be used");
+        System.out.println("WARNING: "+(useVirtualModel?"Virtual":"Platform")+ " Threading Model will be used");
         new Server();
     }
 
