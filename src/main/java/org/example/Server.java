@@ -33,6 +33,13 @@ public class Server {
     static  final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy' 'HH:mm:ss:S");
     static boolean useVirtualModel = false;
 
+    /**
+     * The simple server main method
+     *
+     * @param args can have one parameter only <br>
+     *             Server will use Virtual Threading Model if parameter (--v) is given <br>
+     *             Otherwise Server will use Platform Threading Model
+     */
     public static void main(String[] args) {
         useVirtualModel = (args.length != 0 && args[0].equalsIgnoreCase("--v"));
         System.out.println("WARNING: "+(useVirtualModel?"Virtual":"Platform")+ " Threading Model will be used");
