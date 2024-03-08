@@ -34,7 +34,8 @@ or start the server (for using Virtual Threading Model)
 
     java --enable-preview --source 19 ./src/main/java/org/example/Server.java --v
 
-**Note:** the current project uses JDK version not less than 19.x  
+**Note1:** the current project uses JDK version not less than 19.x <br> 
+**Note2:** Virtual Threads functionality is in preview state there, so we need to inform Java compiler to enable it.
 
 Put in browser https://localhost:8443 and you should get a simple greeting `Hello`
  
